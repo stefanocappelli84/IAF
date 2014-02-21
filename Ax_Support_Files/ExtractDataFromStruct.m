@@ -41,15 +41,18 @@ if nargin == 2
     
     N_elements = prod(VariableSize);
     
-    isNumeric = isnumeric(StructuredData(1).(FieldName));
+    isNumeric = isnumeric(StructuredData(1).(FieldName));    
+    isLocical = islogical(StructuredData(1).(FieldName));
     
     if isNumeric
         YieldedMatrix = zeros([VariableSize, N], VariableType);
+    elseif isLocical
+        YieldedMatrix = zeros([VariableSize, N]);        
     else
         YieldedMatrix = cell([1, N]);
     end
     
-    if isNumeric
+    if isNumeric || isLocical
         for i_ndex = 1:N
             IndexStart = 1 + N_elements .* (i_ndex - 1);
             IndexEnd = IndexStart + N_elements - 1;
